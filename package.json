@@ -1,0 +1,80 @@
+{
+  "name": "cognition-workspace",
+  "version": "0.0.2",
+  "private": true,
+  "type": "module",
+  "description": "Local goal-directed learning workspace",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "tsc --noEmit && vite build",
+    "start": "electron .",
+    "test:backend": ".venv\\Scripts\\python.exe -m unittest discover -s backend/tests -v",
+    "test:desktop": "node scripts/smoke.mjs",
+    "package:backend": ".venv\\Scripts\\python.exe -m PyInstaller --noconfirm --clean --onedir --name cognition-backend --distpath build/backend --workpath build/pyinstaller --specpath build backend/main.py",
+    "package": "npm run build && npm run package:backend && electron-builder --win dir --publish never",
+    "installer": "node scripts/installer.mjs",
+    "test:reading": "node scripts/reading-check.mjs"
+  },
+  "build": {
+    "appId": "local.cognition.workspace",
+    "productName": "认知工作区",
+    "directories": {
+      "output": "release/v0.0.2"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "build/backend/cognition-backend",
+        "to": "backend"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "signExecutable": false,
+      "icon": "assets/app.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    },
+    "artifactName": "Cognition-Workspace-Setup-${version}.${ext}"
+  },
+  "dependencies": {
+    "@earendil-works/pi-ai": "1.5.2",
+    "@earendil-works/pi-coding-agent": "1.5.2",
+    "lucide-react": "1.75.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-force-graph-3d": "1.29.2",
+    "react-markdown": "10.1.0",
+    "three": "0.187.0",
+    "three-spritetext": "1.10.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/three": "0.187.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "electron": "45.3.4",
+    "electron-builder": "26.18.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.8"
+  },
+  "author": "Cognition Workspace",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourskenny/cognition-workspace.git"
+  },
+  "homepage": "https://github.com/yourskenny/cognition-workspace",
+  "bugs": {
+    "url": "https://github.com/yourskenny/cognition-workspace/issues"
+  }
+}

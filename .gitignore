@@ -1,0 +1,16 @@
+node_modules/
+.venv/
+dist/
+build/
+release/
+__pycache__/
+*.pyc
+.test-data/
+test-results/
+NVIDIA Corporation/
+*.log
+.env*
+!.env.example
+credentials.json
+workspace/
+agent-scratch/
